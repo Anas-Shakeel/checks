@@ -6,7 +6,7 @@ from checks.exceptions import ParseError
 CMD_REGEX = {
     "add": re.compile(r"\"(.+)\""),
     "search": re.compile(r"\"(.+)\""),
-    "check": re.compile(r""),
+    "check": re.compile(r"(\d+)\s*?(-a|--all)?"),
     "uncheck": re.compile(r""),
     "list": re.compile(r"(?:-c|--completed)|(?:-p|--pending)|(?:-m|--minimal)"),
     "delete": re.compile(r""),
@@ -53,7 +53,15 @@ class Parser:
                     raise ParseError("invalid syntax '%s'" % args)
 
             case "check":
-                pass
+                if not args:
+                    raise ParseError("'check' expects an id")
+
+                if matches := re.fullmatch(CMD_REGEX['check'], args):
+                    tokens["args"] = matches.group(1)
+                    if matches.group(2):
+                        tokens["flags"].append(matches.group(2))
+                else:
+                    raise ParseError("invalid syntax '%s'" % args)
 
             case "uncheck":
                 pass
