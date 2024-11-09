@@ -1,7 +1,6 @@
 """ Contains a parser that parses commands from user inputs """
 
 import re
-# from checks.commands import add, search, check, uncheck, delete, list_tasks
 from checks.exceptions import ParseError
 
 CMD_REGEX = {
@@ -9,7 +8,7 @@ CMD_REGEX = {
     "search": re.compile(r"\"(.+)\""),
     "check": re.compile(r""),
     "uncheck": re.compile(r""),
-    "list": re.compile(r""),
+    "list": re.compile(r"(?:-c|--completed)|(?:-p|--pending)|(?:-m|--minimal)"),
     "delete": re.compile(r""),
 }
 
@@ -31,7 +30,7 @@ class Parser:
         tokens = {
             "action": action,
             "args": None,
-            "flags": None,
+            "flags": [],
         }
 
         match action:
@@ -60,7 +59,16 @@ class Parser:
             case "delete":
                 pass
             case "list":
-                pass
+                if args:
+                    args_parts = args.split(" ")
+
+                    for part in args_parts:
+                        if matches := re.fullmatch(CMD_REGEX['list'], part):
+                            if part not in tokens['flags']:
+                                tokens['flags'].append(part)
+                        else:
+                            raise ParseError("invalid syntax '%s'" % part)
+
             case _:
                 raise ParseError("unknown command '%s'" % action)
 
