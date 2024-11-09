@@ -6,7 +6,9 @@ from checks.exceptions import ParseError
 CMD_REGEX = {
     "add": re.compile(r"\"(.+)\""),
     "search": re.compile(r"\"(.+)\""),
-    "check": re.compile(r"(\d+)\s*?(-a|--all)?"),
+    # "check": re.compile(r"(\d+)\s*?(-a|--all)?"),
+    "check_id": re.compile(r"\d+"),
+    "check_flag": re.compile(r"-a|--all"),
     "uncheck": re.compile(r""),
     "list": re.compile(r"(?:-c|--completed)|(?:-p|--pending)|(?:-m|--minimal)"),
     "delete": re.compile(r""),
@@ -29,7 +31,7 @@ class Parser:
 
         tokens = {
             "action": action,
-            "args": None,
+            "args": [],
             "flags": [],
         }
 
@@ -56,12 +58,15 @@ class Parser:
                 if not args:
                     raise ParseError("'check' expects an id")
 
-                if matches := re.fullmatch(CMD_REGEX['check'], args):
-                    tokens["args"] = matches.group(1)
-                    if matches.group(2):
-                        tokens["flags"].append(matches.group(2))
-                else:
-                    raise ParseError("invalid syntax '%s'" % args)
+                for part in args.split(" "):
+                    if re.fullmatch(CMD_REGEX['check_id'], part):
+                        # Parse IDs
+                        tokens["args"].append(int(part))
+                    elif re.fullmatch(CMD_REGEX['check_flag'], part):
+                        # Parse Flags
+                        tokens['flags'].append(part)
+                    else:
+                        raise ParseError("invalid syntax '%s'" % part)
 
             case "uncheck":
                 pass
@@ -71,9 +76,7 @@ class Parser:
 
             case "list":
                 if args:
-                    args_parts = args.split(" ")
-
-                    for part in args_parts:
+                    for part in args.split(" "):
                         if matches := re.fullmatch(CMD_REGEX['list'], part):
                             if part not in tokens['flags']:
                                 tokens['flags'].append(part)
