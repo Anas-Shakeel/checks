@@ -4,10 +4,10 @@ import re
 from checks.exceptions import ParseError
 
 CMD_REGEX = {
-    "add": re.compile(r"\"(.+)\""),
-    "search": re.compile(r"\"(.+)\""),
-    # "check": re.compile(r"(\d+)\s*?(-a|--all)?"),
-    "check_id": re.compile(r"\d+"),
+    "string": re.compile(r"\"(.+)\""),
+    # "search": re.compile(r"\"(.+)\""),
+    "id": re.compile(r"\d+"),
+    # "check_id": re.compile(r"\d+"),
     "check_flag": re.compile(r"-a|--all"),
     "uncheck": re.compile(r""),
     "list": re.compile(r"(?:-c|--completed)|(?:-p|--pending)|(?:-m|--minimal)"),
@@ -40,7 +40,7 @@ class Parser:
                 if not args:
                     raise ParseError("'add' expects a string")
 
-                if matches := re.fullmatch(CMD_REGEX['add'], args):
+                if matches := re.fullmatch(CMD_REGEX['string'], args):
                     tokens["args"].append(matches.group(1))
                 else:
                     raise ParseError("invalid syntax '%s'" % args)
@@ -49,7 +49,7 @@ class Parser:
                 if not args:
                     raise ParseError("'search' expects a string")
 
-                if matches := re.fullmatch(CMD_REGEX['search'], args):
+                if matches := re.fullmatch(CMD_REGEX['string'], args):
                     tokens["args"].append(matches.group(1))
                 else:
                     raise ParseError("invalid syntax '%s'" % args)
@@ -58,12 +58,12 @@ class Parser:
                 if not args:
                     raise ParseError("'check' expects an id")
 
-                for part in args.split(" "):
-                    if re.fullmatch(CMD_REGEX['check_id'], part):
-                        # Parse IDs
+                for part in args.split(","):
+                    part = part.strip()
+
+                    if re.fullmatch(CMD_REGEX['id'], part):
                         tokens["args"].append(int(part))
                     elif re.fullmatch(CMD_REGEX['check_flag'], part):
-                        # Parse Flags
                         tokens['flags'].append(part)
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
