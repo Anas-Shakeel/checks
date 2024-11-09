@@ -72,6 +72,10 @@ class Parser:
                         else:
                             raise ParseError("invalid syntax '%s'" % part)
 
+            case "help":
+                if args:
+                    raise ParseError("invalid syntax '%s'" % args)
+
             case _:
                 raise ParseError("unknown command '%s'" % action)
 
