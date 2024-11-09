@@ -50,7 +50,7 @@ class Parser:
                     raise ParseError("'search' expects a string")
 
                 if matches := re.fullmatch(CMD_REGEX['search'], args):
-                    tokens["args"] = matches.group(1)
+                    tokens["args"].append(matches.group(1))
                 else:
                     raise ParseError("invalid syntax '%s'" % args)
 
