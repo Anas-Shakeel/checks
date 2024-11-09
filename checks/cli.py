@@ -31,18 +31,18 @@ def main():
     except (KeyboardInterrupt, EOFError):
         print("Force quit.")
         sys.exit(0)
-    except ValueError:
-        print("CLI: An unknown error occured.")
-        sys.exit(1)
 
 
 def process_command(command: str):
     """ Process command using `Parser` class """
     # Parse the command
     try:
-        Parser.parse(command)
+        tokens = Parser.parse(command)
     except ParseError as e:
         print("Parse error: %s" % e)
+        return
+
+    print(tokens)
 
 
 def print_help():
