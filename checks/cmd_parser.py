@@ -29,7 +29,7 @@ class Parser:
         args = parts[-1] if parts[1:] else None
 
         tokens = {
-            "command": action,
+            "action": action,
             "args": None,
             "flags": None,
         }
