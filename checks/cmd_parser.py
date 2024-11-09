@@ -54,10 +54,13 @@ class Parser:
 
             case "check":
                 pass
+
             case "uncheck":
                 pass
+
             case "delete":
                 pass
+
             case "list":
                 if args:
                     args_parts = args.split(" ")
