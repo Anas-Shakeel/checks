@@ -1,4 +1,4 @@
-""" Contains a parser that parses commands from user inputs """
+""" Contains a parser that parses specific commands """
 
 import re
 from checks.exceptions import ParseError
