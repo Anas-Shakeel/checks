@@ -44,6 +44,15 @@ class Parser:
                 else:
                     raise ParseError("invalid syntax '%s'" % args)
 
+            case "search":
+                if not args:
+                    raise ParseError("'search' expects a string")
+
+                if matches := re.fullmatch(CMD_REGEX['search'], args):
+                    tokens["args"] = matches.group(1)
+                else:
+                    raise ParseError("invalid syntax '%s'" % args)
+
             case "check":
                 pass
             case "uncheck":
@@ -56,4 +65,3 @@ class Parser:
                 raise ParseError("unknown command '%s'" % action)
 
         return tokens
-
