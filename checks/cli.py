@@ -23,11 +23,10 @@ def main():
             # Empty?
             if not command:
                 continue
+            
+            # Parse and process the command
+            process_command(command)
 
-            if command == "help":
-                print_help()
-            else:
-                process_command(command)
     except (KeyboardInterrupt, EOFError):
         print("Force quit.")
         sys.exit(0)
