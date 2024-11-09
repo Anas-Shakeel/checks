@@ -7,7 +7,7 @@ CMD_REGEX = {
     "string": re.compile(r"\"(.+)\""),
     "id": re.compile(r"\d+"),
     "check_flag": re.compile(r"-a|--all"),
-    "uncheck": re.compile(r""),
+    "uncheck_flag": re.compile(r"-a|--all"),
     "list": re.compile(r"(?:-c|--completed)|(?:-p|--pending)|(?:-m|--minimal)"),
     "delete": re.compile(r""),
 }
@@ -69,7 +69,18 @@ class Parser:
                         raise ParseError("invalid syntax '%s'" % part)
 
             case "uncheck":
-                pass
+                if not args:
+                    raise ParseError("'uncheck' expects an id")
+
+                for part in args.split(","):
+                    part = part.strip()
+
+                    if re.fullmatch(CMD_REGEX['id'], part):
+                        tokens["args"].append(int(part))
+                    elif re.fullmatch(CMD_REGEX['uncheck_flag'], part):
+                        tokens['flags'].append(part)
+                    else:
+                        raise ParseError("invalid syntax '%s'" % part)
 
             case "delete":
                 pass
