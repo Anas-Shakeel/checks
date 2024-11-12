@@ -108,7 +108,7 @@ class Database:
             self.save_tasks()
         return task
 
-    def check_tasks(self, task_ids: int):
+    def check_tasks(self, task_ids: Iterable[int]):
         """ Mark bulk tasks as completed. """
         datetime = get_current_datetime()
         for id_ in task_ids:
@@ -129,7 +129,7 @@ class Database:
             self.save_tasks()
         return task
 
-    def uncheck_tasks(self, task_ids: int):
+    def uncheck_tasks(self, task_ids: Iterable[int]):
         """ Mark bulk tasks as incomplete. """
         for id_ in task_ids:
             task = self.get_task(id_)
