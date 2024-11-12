@@ -5,7 +5,7 @@ from pathlib import Path
 from checks.models import Task
 from checks.utils import get_current_datetime
 
-from typing import List, Dict, Union, Iterable
+from typing import List, Dict, Union, Iterable, Optional
 
 DB_PATH = Path("tasks.json")
 
@@ -76,25 +76,27 @@ class Database:
             json.dump([task.to_dict() for task in self.tasks.values()],
                       file, indent=2)
 
-    def add_task(self, description: Union[str, Iterable[str]]):
-        """ Add new task(s) to in-memory database and save the database """
-        # Ensure description is an iterable
-        description = [description] if isinstance(
-            description, str) else description
+    def add_task(self, description: str) -> Task:
+        """ Add a new task to in-memory database and save the database """
+        new_task = Task(description=description)
+        self.tasks[new_task.id] = new_task
+        self.save_tasks()
+        return new_task
 
+    def add_tasks(self, descriptions: Iterable[str]):
+        """ Add bulk tasks into in-memory database efficiently. """
         # Create & Add tasks to db
-        for desc in description:
+        for desc in descriptions:
             new_task = Task(description=desc)
             self.tasks[new_task.id] = new_task
 
-        # Save db
         self.save_tasks()
 
-    def get_task(self, task_id: int) -> Task:
+    def get_task(self, task_id: int) -> Optional[Task]:
         """ Returns a task by it's ID """
         return self.tasks.get(task_id, None)
 
-    def check_task(self, task_id: int):
+    def check_task(self, task_id: int) -> Optional[Task]:
         """ Mark a task as completed, Returns the task if succeed,
         `None` if task_id wasn't found """
         task = self.get_task(task_id)
