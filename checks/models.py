@@ -19,6 +19,7 @@ class Task:
 
     @classmethod
     def from_dict(cls, data: dict):
+        """ Convert `data` dictionary to Task object. """
         cls.update_last_id(data["id"])
         return cls(
             id=data['id'],
@@ -28,7 +29,8 @@ class Task:
             completed_at=data.get('completed_at')
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """ Convert Task object to a dictionary """
         return {
             "id": self.id,
             "description": self.description,
