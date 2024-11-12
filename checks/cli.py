@@ -3,7 +3,6 @@
 import sys
 from checks.parser import Parser
 from checks.commands import add, check, uncheck, delete, list_tasks
-from checks.db.json_database import load_tasks, save_tasks
 from checks.exceptions import ParseError
 
 
@@ -23,7 +22,7 @@ def main():
             # Empty?
             if not command:
                 continue
-            
+
             # Parse and process the command
             process_command(command)
 
