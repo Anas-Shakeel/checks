@@ -90,6 +90,10 @@ class Database:
         # Save db
         self.save_tasks()
 
+    def get_task(self, task_id: int) -> Task:
+        """ Returns a task by it's ID """
+        return self.tasks.get(task_id, None)
+
     def __str__(self) -> str:
         string = ""
         for task in self.tasks.values():
