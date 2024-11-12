@@ -6,7 +6,7 @@ from checks.models import Task
 from checks.utils import get_current_datetime
 from os import remove
 
-from typing import List, Dict, Union, Iterable, Optional
+from typing import List, Dict, Iterable, Optional
 
 DB_PATH = Path("tasks.json")
 
@@ -158,11 +158,11 @@ class Database:
         if delete_file:
             remove(self.db_path)
 
-    def list_tasks(self) -> list[Task]:
+    def list_tasks(self) -> List[Task]:
         """ Return all tasks in memory """
         return list(self.tasks.values())
 
-    def search_tasks(self, keyword: str) -> Optional[list[Task]]:
+    def search_tasks(self, keyword: str) -> Optional[List[Task]]:
         """ Search tasks by keyword in task's description. """
         keyword = keyword.lower()
         return [task for task in self.tasks.values() if keyword in task.description.lower()]
