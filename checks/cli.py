@@ -1,7 +1,7 @@
 """ Core CLI loop, parsing commands and routing """
 
 import sys
-from checks.cmd_parser import Parser
+from checks.parser import Parser
 from checks.commands import add, check, uncheck, delete, list_tasks
 from checks.db.json_database import load_tasks, save_tasks
 from checks.exceptions import ParseError
