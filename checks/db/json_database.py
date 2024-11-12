@@ -135,6 +135,14 @@ class Database:
         self.save_tasks()
         return task
 
+    def delete_task(self, task_id: int):
+        """ Delete a task by it's ID and save changes. """
+        try:
+            del self.tasks[task_id]
+            self.save_tasks()
+        except KeyError:
+            return
+
     def __str__(self) -> str:
         string = ""
         for task in self.tasks.values():
