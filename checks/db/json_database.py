@@ -52,6 +52,13 @@ class Database:
         self.db_path = db_path
         self.tasks: Dict[int, Task] = self.load_tasks()
 
+    def __str__(self) -> str:
+        string = ""
+        for task in self.tasks.values():
+            string += f"{task}\n"
+
+        return string.rstrip()
+
     def load_tasks(self) -> Dict[int, dict]:
         """ Load tasks from JSON file into memory. """
         if self.db_path.exists():
@@ -142,13 +149,6 @@ class Database:
         for task_id in task_ids:
             self.tasks.pop(task_id, None)
         self.save_tasks()
-
-    def __str__(self) -> str:
-        string = ""
-        for task in self.tasks.values():
-            string += f"{task}\n"
-
-        return string.rstrip()
 
 
 # Import this as database
