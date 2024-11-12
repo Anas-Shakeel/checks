@@ -58,6 +58,8 @@ class Database:
             try:
                 with open(self.db_path, "r", encoding="utf-8") as file:
                     tasks_data = json.load(file)
+
+                # Load into memory as dict for quick lookup
                 return {data["id"]: Task.from_dict(data) for data in tasks_data}
             except json.JSONDecodeError:
                 pass
@@ -100,6 +102,17 @@ class Database:
             task.completed = True
             task.completed_at = get_current_datetime()
             self.save_tasks()
+        return task
+
+    def check_tasks(self, task_ids: int):
+        """ Mark bulk tasks as completed. """
+        datetime = get_current_datetime()
+        for id_ in task_ids:
+            task = self.get_task(id_)
+            if task and not task.completed:
+                task.completed = True
+                task.completed_at = datetime
+        self.save_tasks()
         return task
 
     def __str__(self) -> str:
