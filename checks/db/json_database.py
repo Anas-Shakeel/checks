@@ -9,8 +9,11 @@ DB_PATH = Path("tasks.json")
 def load_tasks():
     """ Read & load json file, Returns the json data as python object """
     if DB_PATH.exists():
-        with open(DB_PATH, "r", encoding="utf-8") as file:
-            return json.load(file)
+        try:
+            with open(DB_PATH, "r", encoding="utf-8") as file:
+                return json.load(file)
+        except json.JSONDecodeError:
+            pass
     return []
 
 
