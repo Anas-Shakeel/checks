@@ -154,6 +154,11 @@ class Database:
         """ Return all tasks in memory """
         return list(self.tasks.values())
 
+    def search_tasks(self, keyword: str) -> Optional[list[Task]]:
+        """ Search tasks by keyword in task's description. """
+        keyword = keyword.lower()
+        return [task for task in self.tasks.values() if keyword in task.description.lower()]
+
 
 # Import this as database
 db = Database()
