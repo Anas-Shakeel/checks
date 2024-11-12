@@ -10,34 +10,31 @@ from typing import List
 DB_PATH = Path("tasks.json")
 
 
-def load_tasks():
-    """ load tasks from JSON file, Return tasks as python `list` """
-    if DB_PATH.exists():
-        try:
-            with open(DB_PATH, "r", encoding="utf-8") as file:
-                tasks_data = json.load(file)
-            tasks = [Task.from_dict(data) for data in tasks_data]
-            return tasks
-        except json.JSONDecodeError:
-            pass
-    return []
+class Database:
+    def __init__(self, db_path: Path = DB_PATH) -> None:
+        self.db_path = db_path
+        self.tasks = self.load_tasks()
+
+    def load_tasks(self):
+        """ Load tasks from JSON file into memory. """
+        if self.db_path.exists():
+            try:
+                with open(self.db_path, "r", encoding="utf-8") as file:
+                    tasks_data = json.load(file)
+                tasks = [Task.from_dict(data) for data in tasks_data]
+                return tasks
+            except json.JSONDecodeError:
+                pass
+        return []
+
+    def save_tasks(self):
+        """ Saves tasks from memory to JSON file. """
+        if not self.tasks:
+            return
+
+        with open(self.db_path, "w", encoding="utf-8") as file:
+            json.dump([task.to_dict() for task in self.tasks], file, indent=2)
 
 
-def save_tasks(tasks: List[Task]):
-    """ Save/Write `tasks` to json file/database """
-    if not tasks:
-        return
-
-    with open(DB_PATH, "w", encoding="utf-8") as file:
-        json.dump([task.to_dict() for task in tasks], file, indent=2)
-
-
-def add_task(description: str) -> Task:
-    """ Add a new task `description` to the database. Returns the new task """
-    tasks = load_tasks()
-
-    new_task = Task(description=description)
-    tasks.append(new_task)
-    save_tasks(tasks)
-
-    return new_task
+# Import this as database
+db = Database()
