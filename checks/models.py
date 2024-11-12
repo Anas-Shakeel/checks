@@ -16,7 +16,10 @@ class Task:
         self.description = description
         self.completed = completed
         self.created_at = created_at or get_current_datetime()
-        self.completed_at = completed_at
+
+        # Automatically add completed date if completed
+        if completed:
+            self.completed_at = completed_at or get_current_datetime()
 
     @classmethod
     def from_dict(cls, data: dict):
