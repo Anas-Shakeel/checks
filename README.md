@@ -4,7 +4,7 @@ A CLI application for managing todo tasks while coding. (rather than managing `T
 
 
 #### NOTE:
-This project is currently under development!
+This project is currently under development.
 
 
 ### Usage:
