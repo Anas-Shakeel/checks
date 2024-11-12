@@ -25,5 +25,6 @@ def save_tasks(tasks):
     """ Save/Write `tasks` to json file/database """
     if not tasks:
         return
+
     with open(DB_PATH, "w", encoding="utf-8") as file:
-        json.dump(tasks, file, indent=2)
+        json.dump([task.to_dict() for task in tasks], file, indent=2)
