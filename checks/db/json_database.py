@@ -137,11 +137,14 @@ class Database:
 
     def delete_task(self, task_id: int):
         """ Delete a task by it's ID and save changes. """
-        try:
-            del self.tasks[task_id]
-            self.save_tasks()
-        except KeyError:
-            return
+        self.tasks.pop(task_id, None)
+        self.save_tasks()
+
+    def delete_tasks(self, task_ids: Iterable[int]):
+        """ Delete bulk tasks by ID in `task_id` iterable and save changes. """
+        for task_id in task_ids:
+            self.tasks.pop(task_id, None)
+        self.save_tasks()
 
     def __str__(self) -> str:
         string = ""
