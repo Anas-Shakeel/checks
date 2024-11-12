@@ -50,22 +50,18 @@ class Database:
 
     def __init__(self, db_path: Path = DB_PATH) -> None:
         self.db_path = db_path
+        self.tasks: Dict[int, Task] = self.load_tasks()
 
-        # Convert to dict with IDs as keys for quick lookup
-        self.tasks: Dict[int, Task] = {
-            task.id: task for task in self.load_tasks()}
-
-    def load_tasks(self) -> Dict:
+    def load_tasks(self) -> Dict[int, dict]:
         """ Load tasks from JSON file into memory. """
         if self.db_path.exists():
             try:
                 with open(self.db_path, "r", encoding="utf-8") as file:
                     tasks_data = json.load(file)
-                tasks = [Task.from_dict(data) for data in tasks_data]
-                return tasks
+                return {data["id"]: Task.from_dict(data) for data in tasks_data}
             except json.JSONDecodeError:
                 pass
-        return []
+        return {}
 
     def save_tasks(self):
         """ Saves tasks from memory to JSON file. """
