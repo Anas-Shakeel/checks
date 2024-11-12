@@ -78,7 +78,10 @@ class Database:
 
     def add_task(self, description: str) -> Task:
         """ Add a new task to in-memory database and save """
-        pass
+        new_task = Task(description=description)
+        self.tasks[new_task.id] = new_task
+        self.save_tasks()
+        return new_task
 
     def __str__(self) -> str:
         string = ""
