@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from checks.models import Task
 from checks.utils import get_current_datetime
+from os import remove
 
 from typing import List, Dict, Union, Iterable, Optional
 
@@ -149,6 +150,13 @@ class Database:
         for task_id in task_ids:
             self.tasks.pop(task_id, None)
         self.save_tasks()
+
+    def clear_database(self, delete_file: bool = False):
+        """ Clear the whole database and every task in it """
+        self.tasks = {}  # Clear in-memory database
+        self.save_tasks()
+        if delete_file:
+            remove(self.db_path)
 
     def list_tasks(self) -> list[Task]:
         """ Return all tasks in memory """
