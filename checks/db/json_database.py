@@ -67,9 +67,6 @@ class Database:
 
     def save_tasks(self):
         """ Saves tasks from memory to JSON file. """
-        if not self.tasks:
-            return
-
         with open(self.db_path, "w", encoding="utf-8") as file:
             json.dump([task.to_dict() for task in self.tasks.values()],
                       file, indent=2)
