@@ -150,6 +150,10 @@ class Database:
             self.tasks.pop(task_id, None)
         self.save_tasks()
 
+    def list_tasks(self) -> list[Task]:
+        """ Return all tasks in memory """
+        return list(self.tasks.values())
+
 
 # Import this as database
 db = Database()
