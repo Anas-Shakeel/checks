@@ -77,7 +77,7 @@ class Database:
                       file, indent=2)
 
     def add_task(self, description: Union[str, Iterable[str]]):
-        """ Add a new task to in-memory database and save """
+        """ Add new task(s) to in-memory database and save the database """
         # Ensure description is an iterable
         description = [description] if isinstance(
             description, str) else description
@@ -93,6 +93,16 @@ class Database:
     def get_task(self, task_id: int) -> Task:
         """ Returns a task by it's ID """
         return self.tasks.get(task_id, None)
+
+    def check_task(self, task_id: int):
+        """ Mark a task as completed, Returns the task if succeed,
+        `None` if task_id wasn't found """
+        task = self.get_task(task_id)
+        if task and not task.completed:
+            task.completed = True
+            task.completed_at = get_current_datetime()
+            self.save_tasks()
+        return task
 
     def __str__(self) -> str:
         string = ""
