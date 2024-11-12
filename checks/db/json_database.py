@@ -115,6 +115,26 @@ class Database:
         self.save_tasks()
         return task
 
+    def uncheck_task(self, task_id: int) -> Optional[Task]:
+        """ Mark a task as incomplete, Returns the task if succeed,
+        `None` if task_id wasn't found """
+        task = self.get_task(task_id)
+        if task and task.completed:
+            task.completed = False
+            task.completed_at = None
+            self.save_tasks()
+        return task
+
+    def uncheck_tasks(self, task_ids: int):
+        """ Mark bulk tasks as incomplete. """
+        for id_ in task_ids:
+            task = self.get_task(id_)
+            if task and task.completed:
+                task.completed = False
+                task.completed_at = None
+        self.save_tasks()
+        return task
+
     def __str__(self) -> str:
         string = ""
         for task in self.tasks.values():
