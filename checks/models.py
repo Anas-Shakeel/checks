@@ -51,3 +51,6 @@ class Task:
     @classmethod
     def update_last_id(cls, task_id):
         cls.last_id = max(cls.last_id, int(task_id))
+
+    def __str__(self) -> str:
+        return "%d: %s" % (self.id, self.description)
