@@ -1,6 +1,7 @@
 """ Defines Task data model """
 
 from datetime import datetime
+from checks.utils import DATE_FORMAT
 
 
 class Task:
@@ -14,7 +15,7 @@ class Task:
         self.id = task_id or Task.get_next_id()
         self.description = description
         self.completed = completed
-        self.created_at = created_at or datetime.now().isoformat()
+        self.created_at = created_at or datetime.now().strftime(DATE_FORMAT)
         self.completed_at = completed_at
 
     @classmethod
