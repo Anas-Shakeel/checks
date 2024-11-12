@@ -14,4 +14,6 @@ def load_tasks():
 
 
 def save_tasks(tasks):
-    pass
+    """ Save/Write `tasks` to json file/database """
+    with open(DB_PATH, "w", encoding="utf-8") as file:
+        json.dump(tasks, file, indent=2)
