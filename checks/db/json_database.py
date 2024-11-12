@@ -2,16 +2,20 @@
 
 import json
 from pathlib import Path
+from checks.models import Task
+from checks.utils import get_current_datetime
 
 DB_PATH = Path("tasks.json")
 
 
 def load_tasks():
-    """ Read & load json file, Returns the json data as python object """
+    """ load tasks from JSON file, Return tasks as python `list` """
     if DB_PATH.exists():
         try:
             with open(DB_PATH, "r", encoding="utf-8") as file:
-                return json.load(file)
+                tasks_data = json.load(file)
+            tasks = [Task.from_dict(data) for data in tasks_data]
+            return tasks
         except json.JSONDecodeError:
             pass
     return []
