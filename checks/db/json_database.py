@@ -11,9 +11,12 @@ def load_tasks():
     if DB_PATH.exists():
         with open(DB_PATH, "r", encoding="utf-8") as file:
             return json.load(file)
+    return []
 
 
 def save_tasks(tasks):
     """ Save/Write `tasks` to json file/database """
+    if not tasks:
+        return
     with open(DB_PATH, "w", encoding="utf-8") as file:
         json.dump(tasks, file, indent=2)
