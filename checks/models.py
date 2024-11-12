@@ -1,7 +1,7 @@
 """ Defines Task data model """
 
 from datetime import datetime
-from checks.utils import DATE_FORMAT
+from checks.utils import DATE_FORMAT, get_current_datetime
 
 
 class Task:
@@ -15,7 +15,7 @@ class Task:
         self.id = task_id or Task.get_next_id()
         self.description = description
         self.completed = completed
-        self.created_at = created_at or datetime.now().strftime(DATE_FORMAT)
+        self.created_at = created_at or get_current_datetime()
         self.completed_at = completed_at
 
     @classmethod
@@ -23,7 +23,7 @@ class Task:
         """ Convert `data` dictionary to Task object. """
         cls.update_last_id(data["id"])
         return cls(
-            id=data['id'],
+            task_id=data['id'],
             description=data['description'],
             completed=data['completed'],
             created_at=data['created_at'],
