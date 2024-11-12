@@ -5,7 +5,7 @@ from pathlib import Path
 from checks.models import Task
 from checks.utils import get_current_datetime
 
-from typing import List, Dict
+from typing import List, Dict, Union, Iterable
 
 DB_PATH = Path("tasks.json")
 
@@ -76,12 +76,19 @@ class Database:
             json.dump([task.to_dict() for task in self.tasks.values()],
                       file, indent=2)
 
-    def add_task(self, description: str) -> Task:
+    def add_task(self, description: Union[str, Iterable[str]]):
         """ Add a new task to in-memory database and save """
-        new_task = Task(description=description)
-        self.tasks[new_task.id] = new_task
+        # Ensure description is an iterable
+        description = [description] if isinstance(
+            description, str) else description
+
+        # Create & Add tasks to db
+        for desc in description:
+            new_task = Task(description=desc)
+            self.tasks[new_task.id] = new_task
+
+        # Save db
         self.save_tasks()
-        return new_task
 
     def __str__(self) -> str:
         string = ""
