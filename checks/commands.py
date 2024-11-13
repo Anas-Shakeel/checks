@@ -2,7 +2,7 @@ from checks.db.json_database import db
 from tabulate import tabulate
 
 
-def add_tasks(descriptions):
+def add(descriptions):
     """ Add tasks into the database. Multiple tasks supported. """
     if not descriptions:
         print("No tasks were added.")
