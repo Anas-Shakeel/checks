@@ -1,5 +1,8 @@
 from checks.db.json_database import db
+from checks.models import Task
 from tabulate import tabulate
+from utils import pins, DATE_FORMAT
+from typing import List
 
 
 def add(descriptions):
@@ -88,18 +91,63 @@ def clear(delete_file: bool = False):
 def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = False):
     """ Print all tasks all tasks in a tabular format. """
     if completed:
-        tasks = [task.to_dict() for task in db.list_tasks() if task.completed]
+        tasks = [task for task in db.list_tasks() if task.completed]
     elif pending:
-        tasks = [task.to_dict()
-                 for task in db.list_tasks() if not task.completed]
+        tasks = [task for task in db.list_tasks() if not task.completed]
     else:
-        tasks = [task.to_dict() for task in db.list_tasks()]
+        tasks = list(db.list_tasks())
 
     if not tasks:
         print("No tasks.")
         return
-    headers = {k: k.upper().replace("_", " ") for k in tasks[0].keys()}
-    print(tabulate(tasks, headers=headers, tablefmt="simple_outline"))
+
+    only = None
+    if minimal:
+        only = ['id', 'description']
+
+    tasks = normalize(tasks, only=only)
+    headers = {k: k.title().replace("_", " ") for k in tasks[0].keys()}
+    table_fmt = "presto" if minimal else "simple_outline"
+
+    print(tabulate(tasks, headers=headers, tablefmt=table_fmt))
+
+
+def normalize(tasks: List[Task], only=None):
+    """ Normalize tasks for pretty-print """
+    keys = set(tasks[0].to_dict().keys())
+    intersection = None
+
+    if only:
+        only = set(only)
+        intersection = keys.intersection(only)
+
+    keys = intersection if intersection else keys
+
+    new_tasks = []
+    for task in sorted(tasks, key=lambda t: not t.completed):
+        color = "dark_grey" if task.completed else "green"
+        status = "Completed" if task.completed else "Pending"
+        create_date = pins.time_ago(task.created_at, DATE_FORMAT)
+        complete_date = pins.time_ago(task.completed_at,
+                                      DATE_FORMAT) if task.completed_at else None
+
+        new_task = {}
+        if "id" in keys:
+            new_task["id"] = pins.colorize(task.id, fgcolor=color)
+        if "description" in keys:
+            new_task["description"] = pins.colorize(
+                task.description, fgcolor=color)
+        if "completed" in keys:
+            new_task["status"] = pins.colorize(status, fgcolor=color)
+        if "created_at" in keys:
+            new_task["created_at"] = pins.colorize(create_date, fgcolor=color)
+        if "completed_at" in keys:
+            pins.colorize(complete_date, fgcolor=color)
+
+        if new_task:
+            new_tasks.append(new_task)
+
+    return new_tasks
 
 
 def search(keyword: str):
