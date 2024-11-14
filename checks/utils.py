@@ -1,6 +1,11 @@
 """ Contains functions that don't fit elsewhere """
 
 from datetime import datetime
+from pinsy import Pins
+
+
+# Pins Instance to use across project
+pins = Pins()
 
 # Datetime format used across project
 DATE_FORMAT: str = "%d-%m-%Y %H:%M:%S"
