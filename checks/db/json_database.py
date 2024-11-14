@@ -147,6 +147,17 @@ class Database:
             self.save_tasks()
         return task
 
+    def uncheck_all(self) -> int:
+        """ Mark all tasks as incomplete. Returns the number of tasks checked.  """
+        count = 0
+        for task in self.tasks.values():
+            if task and task.completed:
+                task.completed = False
+                task.completed_at = None
+                count += 1
+        self.save_tasks()
+        return count
+
     def uncheck_tasks(self, task_ids: Iterable[int]) -> int:
         """ Mark bulk tasks as incomplete. """
         count = 0
