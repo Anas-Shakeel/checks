@@ -14,8 +14,11 @@ def add(descriptions):
         print("Task added: '%s'" % descriptions)
     else:
         # Add bulk tasks
-        db.add_tasks(descriptions)
-        print("Tasks added.")
+        count = db.add_tasks(descriptions)
+        if not count:
+            print("No tasks added.")
+            return
+        print("%d Tasks added." % count)
 
 
 def check(task_ids):
