@@ -58,6 +58,11 @@ def uncheck(task_ids):
         print("%d Tasks unchecked." % count)
 
 
+def uncheck_all():
+    count = db.uncheck_all()
+    print("%d tasks unchecked." % count)
+
+
 def delete(task_ids):
     """ Delete tasks from database. """
     if isinstance(task_ids, int):
