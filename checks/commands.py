@@ -140,7 +140,7 @@ def normalize(tasks: List[Task], only=None):
         if "completed" in keys:
             new_task["status"] = pins.colorize(status, fgcolor=color)
         if "created_at" in keys:
-            new_task["created_at"] = pins.colorize(create_date, fgcolor=color)
+            new_task["created"] = pins.colorize(create_date, fgcolor=color)
         if "completed_at" in keys:
             pins.colorize(complete_date, fgcolor=color)
 
