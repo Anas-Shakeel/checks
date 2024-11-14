@@ -113,15 +113,17 @@ class Database:
         return task
 
     def check_tasks(self, task_ids: Iterable[int]):
-        """ Mark bulk tasks as completed. """
+        """ Mark bulk tasks as completed. Returns the number of tasks checked.  """
+        count = 0
         datetime = get_current_datetime()
         for id_ in task_ids:
             task = self.get_task(id_)
             if task and not task.completed:
                 task.completed = True
                 task.completed_at = datetime
+                count += 1
         self.save_tasks()
-        return task
+        return count
 
     def uncheck_task(self, task_id: int) -> Optional[Task]:
         """ Mark a task as incomplete, Returns the task if succeed,
