@@ -26,7 +26,7 @@ def check(task_ids):
     if isinstance(task_ids, int):
         task = db.check_task(task_ids)
         if not task:
-            print("No task with ID: %d", task_ids)
+            print("No task with ID: %d" % task_ids)
             return
         print("Task checked: '%s'" % task.description)
     else:
@@ -42,7 +42,7 @@ def uncheck(task_ids):
     if isinstance(task_ids, int):
         task = db.uncheck_task(task_ids)
         if not task:
-            print("No task with ID: %d", task_ids)
+            print("No task with ID: %d" % task_ids)
             return
         print("Task unchecked: '%s'" % task.description)
     else:
@@ -51,6 +51,22 @@ def uncheck(task_ids):
             print("No tasks unchecked.")
             return
         print("%d Tasks unchecked." % count)
+
+
+def delete(task_ids):
+    """ Delete tasks from database. """
+    if isinstance(task_ids, int):
+        task = db.delete_task(task_ids)
+        if not task:
+            print("No task with ID: %d" % task_ids)
+            return
+        print("Task deleted: '%s'" % task.description)
+    else:
+        count = db.delete_tasks(task_ids)
+        if not count:
+            print("No tasks deleted.")
+            return
+        print("%d Tasks deleted." % count)
 
 
 def list_tasks():
