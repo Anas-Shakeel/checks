@@ -86,14 +86,17 @@ class Database:
         self.save_tasks()
         return new_task
 
-    def add_tasks(self, descriptions: Iterable[str]):
-        """ Add bulk tasks into in-memory database efficiently. """
+    def add_tasks(self, descriptions: Iterable[str]) -> int:
+        """ Add bulk tasks into in-memory database efficiently. Returns the number of tasks added. """
+        count = 0
         # Create & Add tasks to db
         for desc in descriptions:
             new_task = Task(description=desc)
             self.tasks[new_task.id] = new_task
+            count += 1
 
         self.save_tasks()
+        return count
 
     def get_task(self, task_id: int) -> Optional[Task]:
         """ Returns a task by it's ID """
