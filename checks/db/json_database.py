@@ -112,7 +112,7 @@ class Database:
             self.save_tasks()
         return task
 
-    def check_tasks(self, task_ids: Iterable[int]):
+    def check_tasks(self, task_ids: Iterable[int]) -> int:
         """ Mark bulk tasks as completed. Returns the number of tasks checked.  """
         count = 0
         datetime = get_current_datetime()
@@ -135,7 +135,7 @@ class Database:
             self.save_tasks()
         return task
 
-    def uncheck_tasks(self, task_ids: Iterable[int]):
+    def uncheck_tasks(self, task_ids: Iterable[int]) -> int:
         """ Mark bulk tasks as incomplete. """
         count = 0
         for id_ in task_ids:
@@ -152,7 +152,7 @@ class Database:
         self.tasks.pop(task_id, None)
         self.save_tasks()
 
-    def delete_tasks(self, task_ids: Iterable[int]):
+    def delete_tasks(self, task_ids: Iterable[int]) -> int:
         """ Delete bulk tasks by ID in `task_id` iterable and save changes. """
         count = 0
         for task_id in task_ids:
