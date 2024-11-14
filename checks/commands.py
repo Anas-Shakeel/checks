@@ -94,3 +94,8 @@ def search(keyword: str):
 
     headers = {k: k.upper().replace("_", " ") for k in tasks[0].keys()}
     print(tabulate(tasks, headers=headers, tablefmt="simple_outline"))
+
+
+def save():
+    """ Save the database in it's current state. """
+    db.save_tasks()
