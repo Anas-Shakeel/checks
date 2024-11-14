@@ -99,3 +99,4 @@ def search(keyword: str):
 def save():
     """ Save the database in it's current state. """
     db.save_tasks()
+    print("Database saved.")
