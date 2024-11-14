@@ -18,6 +18,22 @@ def add(descriptions):
         print("Tasks added.")
 
 
+def check(task_ids):
+    """ Mark tasks as completed. """
+    if isinstance(task_ids, int):
+        task = db.check_task(task_ids)
+        if not task:
+            print("No task with ID: %d", task_ids)
+            return
+        print("Task checked: '%s'" % task.description)
+    else:
+        count = db.check_tasks(task_ids)
+        if not count:
+            print("No tasks checked.")
+            return
+        print("%d Tasks checked." % count)
+
+
 def list_tasks():
     """ Print all tasks all tasks in a tabular format """
     tasks = [task.to_dict() for task in db.list_tasks()]
