@@ -154,9 +154,12 @@ class Database:
 
     def delete_tasks(self, task_ids: Iterable[int]):
         """ Delete bulk tasks by ID in `task_id` iterable and save changes. """
+        count = 0
         for task_id in task_ids:
             self.tasks.pop(task_id, None)
+            count += 1
         self.save_tasks()
+        return count
 
     def clear_database(self, delete_file: bool = False):
         """ Clear the whole database and every task in it """
