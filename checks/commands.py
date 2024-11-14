@@ -44,10 +44,10 @@ def check_all():
 
 def uncheck(task_ids):
     """ Mark tasks as incomplete. """
-    if isinstance(task_ids, int):
-        task = db.uncheck_task(task_ids)
+    if len(task_ids) == 1:
+        task = db.uncheck_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids)
+            print("No task with ID: %d" % task_ids[0])
             return
         print("Task unchecked: '%s'" % task.description)
     else:
