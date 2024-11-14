@@ -37,6 +37,11 @@ def check(task_ids):
         print("%d Tasks checked." % count)
 
 
+def check_all():
+    count = db.check_all()
+    print("%d tasks checked." % count)
+
+
 def uncheck(task_ids):
     """ Mark tasks as incomplete. """
     if isinstance(task_ids, int):
@@ -75,9 +80,16 @@ def clear(delete_file: bool = False):
     print("Database cleared.")
 
 
-def list_tasks():
-    """ Print all tasks all tasks in a tabular format """
-    tasks = [task.to_dict() for task in db.list_tasks()]
+def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = False):
+    """ Print all tasks all tasks in a tabular format. """
+    if completed:
+        tasks = [task.to_dict() for task in db.list_tasks() if task.completed]
+    elif pending:
+        tasks = [task.to_dict()
+                 for task in db.list_tasks() if not task.completed]
+    else:
+        tasks = [task.to_dict() for task in db.list_tasks()]
+
     if not tasks:
         print("No tasks.")
         return
