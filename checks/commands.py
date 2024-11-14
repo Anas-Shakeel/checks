@@ -157,12 +157,12 @@ def normalize_headers(headers):
 
 def search(keyword: str):
     """ Search tasks using keyword in task's description. """
-    tasks = [task.to_dict() for task in db.search_tasks(keyword)]
+    tasks = [task for task in db.search_tasks(keyword)]
     if not tasks:
         print("No tasks found.")
         return
-
-    headers = {k: k.upper().replace("_", " ") for k in tasks[0].keys()}
+    tasks = normalize(tasks)
+    headers = normalize_headers(tasks[0].keys())
     print(tabulate(tasks, headers=headers, tablefmt="simple_outline"))
 
 
