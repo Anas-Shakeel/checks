@@ -147,10 +147,11 @@ class Database:
         self.save_tasks()
         return count
 
-    def delete_task(self, task_id: int):
+    def delete_task(self, task_id: int) -> Optional[Task]:
         """ Delete a task by it's ID and save changes. """
-        self.tasks.pop(task_id, None)
+        task = self.tasks.pop(task_id, None)
         self.save_tasks()
+        return task
 
     def delete_tasks(self, task_ids: Iterable[int]) -> int:
         """ Delete bulk tasks by ID in `task_id` iterable and save changes. """
