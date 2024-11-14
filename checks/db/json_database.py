@@ -137,13 +137,15 @@ class Database:
 
     def uncheck_tasks(self, task_ids: Iterable[int]):
         """ Mark bulk tasks as incomplete. """
+        count = 0
         for id_ in task_ids:
             task = self.get_task(id_)
             if task and task.completed:
                 task.completed = False
                 task.completed_at = None
+                count += 1
         self.save_tasks()
-        return task
+        return count
 
     def delete_task(self, task_id: int):
         """ Delete a task by it's ID and save changes. """
