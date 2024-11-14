@@ -8,10 +8,10 @@ def add(descriptions):
         print("No tasks were added.")
         return
 
-    if isinstance(descriptions, str):
+    if len(descriptions) == 1:
         # Add single task
-        db.add_task(descriptions)
-        print("Task added: '%s'" % descriptions)
+        db.add_task(descriptions[0])
+        print("Task added: '%s'" % descriptions[0])
     else:
         # Add bulk tasks
         count = db.add_tasks(descriptions)
