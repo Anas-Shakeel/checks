@@ -23,10 +23,10 @@ def add(descriptions):
 
 def check(task_ids):
     """ Mark tasks as complete. """
-    if isinstance(task_ids, int):
-        task = db.check_task(task_ids)
+    if len(task_ids) == 1:
+        task = db.check_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids)
+            print("No task with ID: %d" % task_ids[0])
             return
         print("Task checked: '%s'" % task.description)
     else:
