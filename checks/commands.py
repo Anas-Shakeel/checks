@@ -65,10 +65,10 @@ def uncheck_all():
 
 def delete(task_ids):
     """ Delete tasks from database. """
-    if isinstance(task_ids, int):
-        task = db.delete_task(task_ids)
+    if len(task_ids) == 1:
+        task = db.delete_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids)
+            print("No task with ID: %d" % task_ids[0])
             return
         print("Task deleted: '%s'" % task.description)
     else:
