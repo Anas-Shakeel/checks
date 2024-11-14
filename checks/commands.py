@@ -69,6 +69,12 @@ def delete(task_ids):
         print("%d Tasks deleted." % count)
 
 
+def clear(delete_file: bool = False):
+    """ Clear the database. Delete everything in it. """
+    db.clear_database(delete_file)
+    print("Database cleared.")
+
+
 def list_tasks():
     """ Print all tasks all tasks in a tabular format """
     tasks = [task.to_dict() for task in db.list_tasks()]
