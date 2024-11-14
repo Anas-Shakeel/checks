@@ -106,7 +106,7 @@ def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = F
         only = ['id', 'description']
 
     tasks = normalize(tasks, only=only)
-    headers = {k: k.title().replace("_", " ") for k in tasks[0].keys()}
+    headers = normalize_headers(tasks[0].keys())
     table_fmt = "presto" if minimal else "simple_outline"
 
     print(tabulate(tasks, headers=headers, tablefmt=table_fmt))
@@ -148,6 +148,11 @@ def normalize(tasks: List[Task], only=None):
             new_tasks.append(new_task)
 
     return new_tasks
+
+
+def normalize_headers(headers):
+    """ Normalize headers for use in tabulate tables """
+    return {k: k.title().replace("_", " ") for k in headers}
 
 
 def search(keyword: str):
