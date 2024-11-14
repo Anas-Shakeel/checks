@@ -22,7 +22,7 @@ def add(descriptions):
 
 
 def check(task_ids):
-    """ Mark tasks as completed. """
+    """ Mark tasks as complete. """
     if isinstance(task_ids, int):
         task = db.check_task(task_ids)
         if not task:
@@ -35,6 +35,22 @@ def check(task_ids):
             print("No tasks checked.")
             return
         print("%d Tasks checked." % count)
+
+
+def uncheck(task_ids):
+    """ Mark tasks as incomplete. """
+    if isinstance(task_ids, int):
+        task = db.uncheck_task(task_ids)
+        if not task:
+            print("No task with ID: %d", task_ids)
+            return
+        print("Task unchecked: '%s'" % task.description)
+    else:
+        count = db.uncheck_tasks(task_ids)
+        if not count:
+            print("No tasks unchecked.")
+            return
+        print("%d Tasks unchecked." % count)
 
 
 def list_tasks():
