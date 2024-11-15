@@ -3,6 +3,7 @@
 import sys
 from checks.parser import Parser
 from checks.exceptions import ParseError
+from checks.utils import pins
 from checks.commands import (
     add,
     check,
@@ -27,9 +28,11 @@ def main():
     print("%s version %s" % (PROGRAM.title(), VERSION))
     print("Type 'help' for usage hint. (CTRL+C to force quit)\n")
 
+    PROMPT = pins.colorize("@checks/> ", "dark_grey", attrs=['italic'])
+
     try:
         while True:
-            command = input("checks> ").strip()
+            command = input(PROMPT).strip()
             # Empty?
             if not command:
                 continue
@@ -105,4 +108,18 @@ def process_command(command: str):
 
 def print_help():
     """ Print help text """
-    print("Help is on the way, Hang tight!")
+    help_table = {
+        "help": "print this help text",
+        "add": "add a task",
+        "check": "mark a task as complete",
+        "uncheck": "mark a task as incomplete",
+        "list": "list all tasks",
+        "search": "search tasks",
+        "delete": "delete a task",
+        "save": "save tasks",
+        "exit": "exit the application",
+    }
+
+    print(pins.create_table(help_table, indent_values=4,
+          keys_fg="light_blue", values_attrs=['italic']))
+    print()
