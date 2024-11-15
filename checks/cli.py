@@ -29,7 +29,7 @@ def main():
     print("%s version %s" % (PROGRAM.title(), VERSION))
     print("Type 'help' for usage hint. (CTRL+C to force quit)\n")
 
-    PROMPT = pins.colorize("@checks/> ", "dark_grey", attrs=['italic'])
+    PROMPT = pins.colorize("@checks/> ", "light_cyan", attrs=['italic'])
 
     try:
         while True:
