@@ -122,14 +122,14 @@ def print_startup_info():
 def print_help():
     """ Print help text """
     help_table = {
-        "add": "add a task",
-        "check": "mark a task as complete",
-        "uncheck": "mark a task as incomplete",
-        "remove": "remove a task",
+        "add": "add tasks",
+        "check": "mark tasks as complete",
+        "uncheck": "mark tasks as incomplete",
+        "remove": "remove tasks",
         "list": "list all tasks",
         "search": "search tasks",
         "clear": "clear terminal",
-        "save": "save tasks",
+        "save": "save all tasks",
         "exit": "exit the application",
         "help": "print this help text",
     }
