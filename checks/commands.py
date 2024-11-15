@@ -170,3 +170,8 @@ def save():
     """ Save the database in it's current state. """
     db.save_tasks()
     print("Database saved.")
+
+
+def clear():
+    """ Clear the terminal session. """
+    clear_terminal()
