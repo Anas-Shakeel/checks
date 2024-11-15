@@ -34,7 +34,7 @@ class Parser:
         }
 
         match action:
-            case "add":
+            case "add" | "a":
                 if not args:
                     raise ParseError("'add' expects a string")
 
@@ -45,7 +45,7 @@ class Parser:
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
 
-            case "search":
+            case "search" | "sr":
                 if not args:
                     raise ParseError("'search' expects a string")
 
@@ -54,7 +54,7 @@ class Parser:
                 else:
                     raise ParseError("invalid syntax '%s'" % args)
 
-            case "check":
+            case "check" | "c":
                 if not args:
                     raise ParseError("'check' expects an id")
 
@@ -68,7 +68,7 @@ class Parser:
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
 
-            case "uncheck":
+            case "uncheck" | "uc":
                 if not args:
                     raise ParseError("'uncheck' expects an id")
 
@@ -82,7 +82,7 @@ class Parser:
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
 
-            case "remove":
+            case "remove" | "rm":
                 if not args:
                     raise ParseError("'remove' expects an id")
 
@@ -96,7 +96,7 @@ class Parser:
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
 
-            case "list":
+            case "list" | "ls":
                 if args:
                     for part in args.split(" "):
                         if matches := re.fullmatch(CMD_REGEX['list'], part):
@@ -117,7 +117,7 @@ class Parser:
                 if args:
                     raise ParseError("invalid syntax '%s'" % args)
 
-            case "clear":
+            case "clear" | "cls":
                 if args:
                     raise ParseError("invalid syntax '%s'" % args)
 

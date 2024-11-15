@@ -57,10 +57,10 @@ def process_command(command: str):
         case "help":
             print_help()
 
-        case "add":
+        case "add" | "a":
             add(tokens['args'])
 
-        case "check":
+        case "check" | "c":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
                 check_all()
@@ -68,7 +68,7 @@ def process_command(command: str):
 
             check(tokens['args'])
 
-        case "uncheck":
+        case "uncheck" | "uc":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
                 uncheck_all()
@@ -76,7 +76,7 @@ def process_command(command: str):
 
             uncheck(tokens['args'])
 
-        case "remove":
+        case "remove" | "rm":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
                 agree = pins.input_question("Remove all tasks? (y/N): ",
@@ -87,7 +87,7 @@ def process_command(command: str):
 
             remove(tokens['args'])
 
-        case "list":
+        case "list" | "ls":
             flags = tokens['flags']
             minimal = "-m" in flags or "--minimal" in flags
             completed = "-c" in flags or "--completed" in flags
@@ -95,10 +95,10 @@ def process_command(command: str):
 
             list_tasks(completed=completed, pending=pending, minimal=minimal)
 
-        case "search":
+        case "search" | "sr":
             search(tokens['args'][0])
 
-        case "clear":
+        case "clear" | "cls":
             clear()
 
         case "save":
