@@ -13,8 +13,9 @@ from checks.commands import (
     delete,
     list_tasks,
     search,
-    clear,
-    save
+    delete_all,
+    save,
+    clear
 )
 
 
@@ -80,7 +81,7 @@ def process_command(command: str):
         case "delete":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
-                clear()
+                delete_all()
                 return
 
             delete(tokens['args'])
@@ -95,6 +96,9 @@ def process_command(command: str):
 
         case "search":
             search(tokens['args'][0])
+
+        case "clear":
+            clear()
 
         case "save":
             save()
@@ -116,6 +120,7 @@ def print_help():
         "list": "list all tasks",
         "search": "search tasks",
         "delete": "delete a task",
+        "clear": "clear terminal",
         "save": "save tasks",
         "exit": "exit the application",
     }
