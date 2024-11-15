@@ -26,10 +26,9 @@ VERSION = "0.1"
 def main():
     """ The Interactive CLI Session """
 
-    print("%s version %s" % (PROGRAM.title(), VERSION))
-    print("Type 'help' for usage hint. (CTRL+C to force quit)\n")
+    print_startup_info()
 
-    PROMPT = pins.colorize("@checks/> ", "light_cyan", attrs=['italic'])
+    PROMPT = pins.colorize("@checks/> ", "sea_green", attrs=['italic'])
 
     try:
         while True:
@@ -81,7 +80,10 @@ def process_command(command: str):
         case "delete":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
-                delete_all()
+                agree = pins.input_question("Delete all tasks? (y/N): ",
+                                            prompt_color="light_red")
+                if agree:
+                    delete_all()
                 return
 
             delete(tokens['args'])
@@ -110,10 +112,16 @@ def process_command(command: str):
             print("Unknown command.")
 
 
+def print_startup_info():
+    """ Print the startup help text. """
+    print("%s version %s" % (PROGRAM.title(), VERSION))
+    print("Type '%s' for usage hint. (%s to force quit)\n" % (pins.colorize("help", fgcolor="plum"),
+                                                              pins.colorize("CTRL+C", fgcolor="light_red")))
+
+
 def print_help():
     """ Print help text """
     help_table = {
-        "help": "print this help text",
         "add": "add a task",
         "check": "mark a task as complete",
         "uncheck": "mark a task as incomplete",
@@ -123,8 +131,9 @@ def print_help():
         "clear": "clear terminal",
         "save": "save tasks",
         "exit": "exit the application",
+        "help": "print this help text",
     }
 
     print(pins.create_table(help_table, indent_values=4,
-                            keys_fg="light_magenta", values_attrs=['italic']))
+                            keys_fg="plum", values_attrs=['italic']))
     print()

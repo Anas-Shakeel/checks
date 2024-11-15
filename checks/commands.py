@@ -14,14 +14,14 @@ def add(descriptions):
     if len(descriptions) == 1:
         # Add single task
         db.add_task(descriptions[0])
-        print("Task added: '%s'" % descriptions[0])
+        pins.print_info("'%s' added." % descriptions[0])
     else:
         # Add bulk tasks
         count = db.add_tasks(descriptions)
         if not count:
-            print("No tasks added.")
+            pins.print_info("No tasks added.")
             return
-        print("%d Tasks added." % count)
+        pins.print_info("%d Tasks added." % count)
 
 
 def check(task_ids):
@@ -29,20 +29,20 @@ def check(task_ids):
     if len(task_ids) == 1:
         task = db.check_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids[0])
+            pins.print_error("No task with ID: %d" % task_ids[0])
             return
-        print("Task checked: '%s'" % task.description)
+        pins.print_info("'%s' checked." % task.description)
     else:
         count = db.check_tasks(task_ids)
         if not count:
-            print("No tasks checked.")
+            pins.print_info("No tasks checked.")
             return
-        print("%d Tasks checked." % count)
+        pins.print_info("%d Tasks checked." % count)
 
 
 def check_all():
     count = db.check_all()
-    print("%d tasks checked." % count)
+    pins.print_info("%d Tasks checked." % count)
 
 
 def uncheck(task_ids):
@@ -50,20 +50,20 @@ def uncheck(task_ids):
     if len(task_ids) == 1:
         task = db.uncheck_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids[0])
+            pins.print_error("No task with ID: %d" % task_ids[0])
             return
-        print("Task unchecked: '%s'" % task.description)
+        pins.print_info("'%s' unchecked." % task.description)
     else:
         count = db.uncheck_tasks(task_ids)
         if not count:
-            print("No tasks unchecked.")
+            pins.print_info("No tasks unchecked.")
             return
-        print("%d Tasks unchecked." % count)
+        pins.print_info("%d Tasks unchecked." % count)
 
 
 def uncheck_all():
     count = db.uncheck_all()
-    print("%d tasks unchecked." % count)
+    pins.print_info("%d Tasks unchecked." % count)
 
 
 def delete(task_ids):
@@ -71,21 +71,21 @@ def delete(task_ids):
     if len(task_ids) == 1:
         task = db.delete_task(task_ids[0])
         if not task:
-            print("No task with ID: %d" % task_ids[0])
+            pins.print_error("No task with ID: %d" % task_ids[0])
             return
-        print("Task deleted: '%s'" % task.description)
+        pins.print_info("'%s' deleted." % task.description)
     else:
         count = db.delete_tasks(task_ids)
         if not count:
-            print("No tasks deleted.")
+            pins.print_info("No tasks deleted.")
             return
-        print("%d Tasks deleted." % count)
+        pins.print_info("%d Tasks deleted." % count)
 
 
 def delete_all(delete_file: bool = False):
     """ Clear the database. Delete everything in it. """
     db.clear_database(delete_file)
-    print("Database cleared.")
+    pins.print_info("Database cleared.")
 
 
 def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = False):
@@ -98,7 +98,7 @@ def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = F
         tasks = list(db.list_tasks())
 
     if not tasks:
-        print("No tasks.")
+        pins.print_info("No tasks.")
         return
 
     only = None
@@ -127,7 +127,7 @@ def normalize(tasks: List[Task], only=None):
 
     new_tasks = []
     for task in sorted(tasks, key=lambda t: not t.completed):
-        color = "dark_grey" if task.completed else "green"
+        color = "dark_grey" if task.completed else "light_coral"
         status = "Completed" if task.completed else "Pending"
         create_date = pins.time_ago(task.created_at, DATE_FORMAT)
         complete_date = pins.time_ago(task.completed_at,
@@ -161,7 +161,7 @@ def search(keyword: str):
     """ Search tasks using keyword in task's description. """
     tasks = [task for task in db.search_tasks(keyword)]
     if not tasks:
-        print("No tasks found.")
+        pins.print_info("No tasks found.")
         return
     tasks = normalize(tasks)
     headers = normalize_headers(tasks[0].keys())
@@ -171,7 +171,7 @@ def search(keyword: str):
 def save():
     """ Save the database in it's current state. """
     db.save_tasks()
-    print("Database saved.")
+    pins.print_info("Database saved.")
 
 
 def clear():
