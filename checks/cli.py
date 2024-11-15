@@ -117,14 +117,14 @@ def print_help():
         "add": "add a task",
         "check": "mark a task as complete",
         "uncheck": "mark a task as incomplete",
+        "delete": "delete a task",
         "list": "list all tasks",
         "search": "search tasks",
-        "delete": "delete a task",
         "clear": "clear terminal",
         "save": "save tasks",
         "exit": "exit the application",
     }
 
     print(pins.create_table(help_table, indent_values=4,
-          keys_fg="light_blue", values_attrs=['italic']))
+                            keys_fg="light_magenta", values_attrs=['italic']))
     print()
