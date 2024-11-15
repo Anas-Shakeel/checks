@@ -3,7 +3,7 @@
 import sys
 from checks.parser import Parser
 from checks.exceptions import ParseError
-from checks.utils import pins
+from checks.utils import pins, err
 from checks.commands import (
     add,
     check,
@@ -25,7 +25,6 @@ VERSION = "0.1"
 
 def main():
     """ The Interactive CLI Session """
-
     print_startup_info()
 
     PROMPT = pins.colorize("@checks/> ", "sea_green", attrs=['italic'])
@@ -109,7 +108,8 @@ def process_command(command: str):
             sys.exit(0)
 
         case _:
-            print("Unknown command.")
+            err("CLI Error", "command '%s' is recognized by the parser but not by CLI." %
+                tokens["action"])
 
 
 def print_startup_info():
