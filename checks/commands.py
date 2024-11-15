@@ -106,8 +106,10 @@ def list_tasks(completed: bool = False, pending: bool = False, minimal: bool = F
         only = ['id', 'description']
 
     tasks = normalize(tasks, only=only)
-    headers = normalize_headers(tasks[0].keys())
-    table_fmt = "presto" if minimal else "simple_outline"
+    table_fmt = "plain" if minimal else "simple_outline"
+    headers = ()
+    if not minimal:
+        headers = normalize_headers(tasks[0].keys())
 
     print(tabulate(tasks, headers=headers, tablefmt=table_fmt))
 
