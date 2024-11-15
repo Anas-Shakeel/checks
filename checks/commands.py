@@ -66,23 +66,23 @@ def uncheck_all():
     pins.print_info("%d Tasks unchecked." % count)
 
 
-def delete(task_ids):
-    """ Delete tasks from database. """
+def remove(task_ids):
+    """ remove tasks from database. """
     if len(task_ids) == 1:
         task = db.delete_task(task_ids[0])
         if not task:
             pins.print_error("No task with ID: %d" % task_ids[0])
             return
-        pins.print_info("'%s' deleted." % task.description)
+        pins.print_info("'%s' removed." % task.description)
     else:
         count = db.delete_tasks(task_ids)
         if not count:
-            pins.print_info("No tasks deleted.")
+            pins.print_info("No tasks removed.")
             return
-        pins.print_info("%d Tasks deleted." % count)
+        pins.print_info("%d Tasks removed." % count)
 
 
-def delete_all(delete_file: bool = False):
+def remove_all(delete_file: bool = False):
     """ Clear the database. Delete everything in it. """
     db.clear_database(delete_file)
     pins.print_info("Database cleared.")

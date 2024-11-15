@@ -10,10 +10,10 @@ from checks.commands import (
     check_all,
     uncheck,
     uncheck_all,
-    delete,
+    remove,
     list_tasks,
     search,
-    delete_all,
+    remove_all,
     save,
     clear
 )
@@ -77,16 +77,16 @@ def process_command(command: str):
 
             uncheck(tokens['args'])
 
-        case "delete":
+        case "remove":
             flags = tokens['flags']
             if "-a" in flags or "--all" in flags:
-                agree = pins.input_question("Delete all tasks? (y/N): ",
+                agree = pins.input_question("Remove all tasks? (y/N): ",
                                             prompt_color="light_red")
                 if agree:
-                    delete_all()
+                    remove_all()
                 return
 
-            delete(tokens['args'])
+            remove(tokens['args'])
 
         case "list":
             flags = tokens['flags']
@@ -125,7 +125,7 @@ def print_help():
         "add": "add a task",
         "check": "mark a task as complete",
         "uncheck": "mark a task as incomplete",
-        "delete": "delete a task",
+        "remove": "remove a task",
         "list": "list all tasks",
         "search": "search tasks",
         "clear": "clear terminal",
