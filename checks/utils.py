@@ -6,7 +6,7 @@ from pinsy.utils import clear_terminal
 
 
 # Pins Instance to use across project
-pins = Pins()
+pins = Pins(color_mode=8)
 
 # Datetime format used across project
 DATE_FORMAT: str = "%d-%m-%Y %H:%M:%S"
