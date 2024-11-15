@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from pinsy import Pins
+from pinsy.utils import clear_terminal
 
 
 # Pins Instance to use across project
