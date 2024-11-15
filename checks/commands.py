@@ -1,7 +1,7 @@
 from checks.db.json_database import db
 from checks.models import Task
 from tabulate import tabulate
-from utils import pins, DATE_FORMAT
+from utils import pins, DATE_FORMAT, clear_terminal
 from typing import List
 
 
@@ -82,7 +82,7 @@ def delete(task_ids):
         print("%d Tasks deleted." % count)
 
 
-def clear(delete_file: bool = False):
+def delete_all(delete_file: bool = False):
     """ Clear the database. Delete everything in it. """
     db.clear_database(delete_file)
     print("Database cleared.")
