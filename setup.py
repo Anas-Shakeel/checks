@@ -4,12 +4,13 @@ from setuptools import setup, find_packages
 
 
 def readme():
-    return codecs.open(join(abspath(dirname(__file__)), "README.md")).read()
+    with codecs.open(join(abspath(dirname(__file__)), "README.md"), encoding="utf-8") as f:
+        return f.read()
 
 
 setup(
     name="checks-cli",  # Because checks is reserved on PyPI.
-    version="0.1",
+    version="1.0.0",
     description="Command-line tool to manage tasks list.",
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -19,7 +20,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        # "pinsy", # This is currently not needed but will! in near future.
+        "pinsy",
         "tabulate"
     ],
     keywords=[
@@ -40,7 +41,7 @@ setup(
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",  # Update the license if needed
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
 )
