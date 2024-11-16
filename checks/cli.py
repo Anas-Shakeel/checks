@@ -20,7 +20,7 @@ from checks.commands import (
 
 
 PROGRAM = "checks"
-VERSION = "0.1"
+VERSION = "1.0.1"
 
 
 def main():
