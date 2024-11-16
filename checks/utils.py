@@ -1,8 +1,8 @@
 """ Contains functions that don't fit elsewhere """
 
 from datetime import datetime
-from pinsy import Pins
-from pinsy.utils import clear_terminal
+from checks.pinsy import Pins
+from checks.pinsy.utils import clear_terminal
 
 
 # Pins Instance to use across project

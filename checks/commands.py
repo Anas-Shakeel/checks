@@ -1,7 +1,7 @@
 from checks.db.json_database import db
 from checks.models import Task
+from checks.utils import pins, DATE_FORMAT, clear_terminal
 from tabulate import tabulate
-from utils import pins, DATE_FORMAT, clear_terminal
 from typing import List
 
 
