@@ -1,6 +1,7 @@
 """ Core CLI loop, parsing commands and routing """
 
 import sys
+from argparse import ArgumentParser
 from checks.parser import Parser
 from checks.exceptions import ParseError
 from checks.utils import pins, err
@@ -25,6 +26,17 @@ VERSION = "1.0.1"
 
 def main():
     """ The Interactive CLI Session """
+    # Parse command-line args/flags
+    args = get_args()
+
+    if args.version:
+        # Print checks version and exit
+        print("%s version %s" % (PROGRAM.title(), VERSION))
+        sys.exit(0)
+
+    if args.nocolor:
+        pins.disable_colors()
+
     print_startup_info()
 
     PROMPT = pins.colorize("@checks/> ", "sea_green", attrs=['italic'])
@@ -42,6 +54,20 @@ def main():
     except (KeyboardInterrupt, EOFError):
         print("Force quit.")
         sys.exit(0)
+
+
+def get_args():
+    """ Parse and return command-line args """
+    arg_parser = ArgumentParser(prog=PROGRAM,
+                                usage="%s [OPTIONS]" % PROGRAM,
+                                description="Command-line tool to manage tasks list.")
+
+    arg_parser.add_argument("-v", "--version", action="store_true",
+                            help="print the checks version number and exit")
+    arg_parser.add_argument("-nc", "--nocolor", action="store_true",
+                            help="run checks without color support")
+
+    return arg_parser.parse_args()
 
 
 def process_command(command: str):
