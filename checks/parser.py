@@ -45,7 +45,7 @@ class Parser:
                     else:
                         raise ParseError("invalid syntax '%s'" % part)
 
-            case "search" | "sr":
+            case "search" | "s":
                 if not args:
                     raise ParseError("'search' expects a string")
 
@@ -105,15 +105,15 @@ class Parser:
                         else:
                             raise ParseError("invalid syntax '%s'" % part)
 
-            case "help":
+            case "help" | "h":
                 if args:
                     raise ParseError("invalid syntax '%s'" % args)
 
-            case "exit":
+            case "quit" | "q":
                 if args:
                     raise ParseError("invalid syntax '%s'" % args)
 
-            case "save":
+            case "save" | "sv":
                 if args:
                     raise ParseError("invalid syntax '%s'" % args)
 

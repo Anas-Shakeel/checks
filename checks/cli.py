@@ -80,7 +80,7 @@ def process_command(command: str):
         return
 
     match tokens['action']:
-        case "help":
+        case "help" | "h":
             print_help()
 
         case "add" | "a":
@@ -121,16 +121,16 @@ def process_command(command: str):
 
             list_tasks(completed=completed, pending=pending, minimal=minimal)
 
-        case "search" | "sr":
+        case "search" | "s":
             search(tokens['args'][0])
 
         case "clear" | "cls":
             clear()
 
-        case "save":
+        case "save" | "sv":
             save()
 
-        case "exit":
+        case "quit" | "q":
             sys.exit(0)
 
         case _:
@@ -158,6 +158,18 @@ def print_help():
         "save": "save all tasks",
         "exit": "exit the application",
         "help": "print this help text",
+    }
+    help_table = {
+        "add,     a": "add tasks",
+        "check,   c": "mark tasks as complete",
+        "uncheck, uc": "mark tasks as incomplete",
+        "remove,  rm": "remove tasks",
+        "list,    ls": "list all tasks",
+        "search,  s": "search tasks",
+        "clear,   cls": "clear terminal",
+        "save,    sv": "save all tasks",
+        "quit,    q": "exit the application",
+        "help,    h": "print this help text",
     }
 
     print(pins.create_table(help_table, indent_values=4,
