@@ -1,7 +1,6 @@
 """ Defines Task data model """
 
-from datetime import datetime
-from checks.utils import DATE_FORMAT, get_current_datetime
+from checks.utils import get_current_datetime
 
 
 class Task:
