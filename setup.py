@@ -9,8 +9,8 @@ def readme():
 
 
 setup(
-    name="checks-cli",  # Because checks is reserved on PyPI.
-    version="1.0.1",
+    name="checks-cli",
+    version="1.1.0",
     description="Command-line tool to manage tasks list.",
     long_description=readme(),
     long_description_content_type='text/markdown',
