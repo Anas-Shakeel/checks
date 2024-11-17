@@ -173,7 +173,12 @@ class Database:
     def delete_task(self, task_id: int) -> Optional[Task]:
         """ Delete a task by it's ID and save changes. """
         task = self.tasks.pop(task_id, None)
-        self.save_tasks()
+
+        if task:
+            # Update the last_id
+            Task.last_id = max(self.tasks.keys())
+            self.save_tasks()
+
         return task
 
     def delete_tasks(self, task_ids: Iterable[int]) -> int:
@@ -183,12 +188,18 @@ class Database:
             task = self.tasks.pop(task_id, None)
             if task:
                 count += 1
-        self.save_tasks()
+
+        if count > 0:
+            # Update the last_id
+            Task.last_id = max(self.tasks.keys())
+            self.save_tasks()
+
         return count
 
     def clear_database(self, delete_file: bool = False):
         """ Clear the whole database and every task in it """
         self.tasks = {}  # Clear in-memory database
+        Task.last_id = 0  # Reset last_id
         self.save_tasks()
         if delete_file:
             remove(self.db_path)
