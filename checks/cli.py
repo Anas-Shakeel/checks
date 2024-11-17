@@ -21,7 +21,7 @@ from checks.commands import (
 
 
 PROGRAM = "checks"
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 
 
 def main():
@@ -147,18 +147,6 @@ def print_startup_info():
 
 def print_help():
     """ Print help text """
-    help_table = {
-        "add": "add tasks",
-        "check": "mark tasks as complete",
-        "uncheck": "mark tasks as incomplete",
-        "remove": "remove tasks",
-        "list": "list all tasks",
-        "search": "search tasks",
-        "clear": "clear terminal",
-        "save": "save all tasks",
-        "exit": "exit the application",
-        "help": "print this help text",
-    }
     help_table = {
         "add,     a": "add tasks",
         "check,   c": "mark tasks as complete",
