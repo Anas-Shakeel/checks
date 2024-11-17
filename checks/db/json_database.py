@@ -176,7 +176,7 @@ class Database:
 
         if task:
             # Update the last_id
-            Task.last_id = max(self.tasks.keys())
+            Task.last_id = max(self.tasks.keys(), default=0)
             self.save_tasks()
 
         return task
@@ -191,7 +191,7 @@ class Database:
 
         if count > 0:
             # Update the last_id
-            Task.last_id = max(self.tasks.keys())
+            Task.last_id = max(self.tasks.keys(), default=0)
             self.save_tasks()
 
         return count
