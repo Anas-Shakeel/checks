@@ -31,7 +31,7 @@ def main():
 
     if args.version:
         # Print checks version and exit
-        print("%s version %s" % (PROGRAM.title(), VERSION))
+        print("%s %s" % (PROGRAM.title(), VERSION))
         sys.exit(0)
 
     if args.nocolor:
@@ -140,7 +140,7 @@ def process_command(command: str):
 
 def print_startup_info():
     """ Print the startup help text. """
-    print("%s version %s" % (PROGRAM.title(), VERSION))
+    print("%s %s" % (PROGRAM.title(), VERSION))
     print("Type '%s' for usage hint. (%s to force quit)\n" % (pins.colorize("help", fgcolor="plum"),
                                                               pins.colorize("CTRL+C", fgcolor="light_red")))
 
